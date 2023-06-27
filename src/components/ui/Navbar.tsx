@@ -37,10 +37,10 @@ const Navbar: React.FC<NavbarProps> = ({ hasLogo, title, menuItems }) => {
                     {/* Right Side */}
                     <div className="flex items-center space-x-4">
                         <Link href={'/'} className="hidden md:block">
-                            <span className="py-2 px-3 rounded-md font-semibold">Log in</span>
+                            <span className="py-2 px-4 rounded-md font-light">Log in</span>
                         </Link>
                         <Link href={'/'} className="hidden md:block">
-                            <span className="py-2 px-3 rounded-md font-semibold bg-gray-800 text-white">Sign up</span>
+                            <span className="py-2 px-4 rounded-md font-light bg-gray-800 text-white">Sign up</span>
                         </Link>
                         <button className="md:hidden">
                             <Bars2Icon className="w-8"></Bars2Icon>
