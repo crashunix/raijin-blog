@@ -1,6 +1,7 @@
 import { getBaseUrl } from "@/lib/getBaseUrl";
 import Link from "next/link";
 import next from "next/types";
+import { Bars2Icon } from '@heroicons/react/24/outline'
 
 const fetchFromNotion = async () => {
     const res = await fetch(`${getBaseUrl()}/api/config`);
@@ -9,7 +10,7 @@ const fetchFromNotion = async () => {
 }
 const Header = async () => {
     const config = await fetchFromNotion();
-    
+
     return <>
         <header className="text-gray-800 py-4">
             <div className="container px-4 mx-auto">
@@ -19,7 +20,7 @@ const Header = async () => {
                         <Link href="/">
                             <span className="text-2xl">{config.find((x: any) => x.name == 'app-name').text}</span>
                         </Link>
-                        <nav className="flex items-center space-x-12 font-semibold text-lg">
+                        <nav className="hidden md:flex items-center space-x-12 font-semibold text-lg">
                             <Link href="/">Home</Link>
                             <Link href="/blog">Blog</Link>
                             <Link href="/">Projects</Link>
@@ -27,12 +28,15 @@ const Header = async () => {
                     </div>
                     {/* Right Side */}
                     <div className="flex items-center space-x-4">
-                        <Link href={'/'}>
+                        <Link href={'/'} className="hidden md:block">
                             <span className="py-2 px-3 rounded-md font-semibold">Log in</span>
                         </Link>
-                        <Link href={'/'}>
+                        <Link href={'/'} className="hidden md:block">
                             <span className="py-2 px-3 rounded-md font-semibold bg-gray-800 text-white">Sign up</span>
                         </Link>
+                        <button className="md:hidden">
+                            <Bars2Icon className="w-8"></Bars2Icon>
+                        </button>
                     </div>
                 </div>
             </div>
