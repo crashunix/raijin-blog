@@ -2,13 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { Post } from "@/types/Post";
 import { Metadata } from "next";
+import { getBaseUrl } from "@/lib/getBaseUrl";
 
 export const metadata: Metadata = {
     title: 'Blog',
 }
 
 const fetchFromNotion = async () => {
-    const res = await fetch(`${process.env.FRONTEND_URL}/api/posts`);
+    const res = await fetch(`${getBaseUrl()}/api/posts`);
     const data = await res.json();
     return data;
 }

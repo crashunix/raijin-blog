@@ -1,8 +1,9 @@
+import { getBaseUrl } from "@/lib/getBaseUrl";
 import Link from "next/link";
 import next from "next/types";
 
 const fetchFromNotion = async () => {
-    const res = await fetch(`${process.env.FRONTEND_URL}/api/config`);
+    const res = await fetch(`${getBaseUrl()}/api/config`);
     const data = await res.json();
     return data;
 }
