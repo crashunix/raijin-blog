@@ -5,13 +5,14 @@ import { Client } from "@notionhq/client";
 import { format, parseISO } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { NextApiRequest, NextApiResponse } from "next";
+import { NextResponse } from "next/server";
 
 const notionSecret = process.env.NOTION_SECRET;
 const configDatabaseId = process.env.NOTION_CONFIG_DATABASE_ID;
 
 const notion = new Client({ auth: notionSecret });
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export async function GET() {
     if (!notionSecret || !configDatabaseId) {
         throw Error('Missing notion secret or database id');
     }
@@ -32,6 +33,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
     })
 
-    // @ts-ignore
-    res.status(200).json(configs);
+    // // @ts-ignore
+    // res.status(200).json(configs);
+    return NextResponse.json(configs)
 }

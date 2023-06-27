@@ -1,32 +1,19 @@
 import { Post } from "@/types/Post";
-import { PostSlug } from "@/types/PostSlug";
 import { Client } from "@notionhq/client";
-import { format, parseISO } from "date-fns";
-import { ptBR } from "date-fns/locale";
 import { NextApiRequest, NextApiResponse } from "next";
+import { format, parseISO } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
+import { NextResponse } from "next/server";
 
 const notionSecret = process.env.NOTION_SECRET;
 const blogDatabaseId = process.env.NOTION_BLOG_DATABASE_ID;
 
 const notion = new Client({ auth: notionSecret });
 
-async function getBlocks(blockId: string) {
-    let { results: children } = await notion.blocks.children.list({ block_id: blockId });
-    for (const child of children) {
-        const grandChidlren = await getBlocks(child.id);
-        // @ts-ignore
-        child.children = grandChidlren;
-    }
-    return children;
-}
-
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export async function GET() {
     if (!notionSecret || !blogDatabaseId) {
         throw Error('Missing notion secret or database id');
     }
-
-    const query = req.query;
-    const { slug } = query;
 
     const { results: pages }  = await notion.databases.query({
         database_id: blogDatabaseId
@@ -34,7 +21,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const posts: Post[] = pages.map((item) => {
         return {
-            // @ts-ignore
             id: item.id,
             // @ts-ignore
             title: item.properties.title.title[0].plain_text,
@@ -54,16 +40,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
     })
 
-    const post = posts.find((item) => item.slug === slug);
-    if(!post) {
-        throw Error('Post not found');
-    }
-    const blocks = await getBlocks(post.id);
-    console.log("Post encontrado", JSON.stringify(blocks));
-
-
-    // console.log(JSON.stringify(response));
-    
     // @ts-ignore
-    res.status(200).json({ post, blocks });
+    console.log(posts);
+
+    // res.status(200).json(posts);
+    return NextResponse.json(posts);
 }

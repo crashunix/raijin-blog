@@ -1,13 +1,13 @@
 import Link from "next/link";
+import next from "next/types";
 
 const fetchFromNotion = async () => {
-    const res = await fetch(`http://localhost:3000/api/getConfig`);
+    const res = await fetch(`${process.env.FRONTEND_URL}/api/config`);
     const data = await res.json();
     return data;
 }
 const Header = async () => {
     const config = await fetchFromNotion();
-    console.log(config);
     
     return <>
         <header className="text-gray-800 py-4">

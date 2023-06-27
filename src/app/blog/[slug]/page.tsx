@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   }
 
 const fetchFromNotion = async (slug: string) => {
-    const res = await fetch(`http://localhost:3000/api/post?slug=${slug}`);
+    const res = await fetch(`${process.env.FRONTEND_URL}/api/post?slug=${slug}`);
     const data = await res.json();
     return data;
 }
