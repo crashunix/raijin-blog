@@ -1,0 +1,9 @@
+GET http://localhost:3000/api/getDatabaseId?database=posts
+
+### 
+
+GET http://localhost:3000/api/posts
+
+### 
+
+GET http://localhost:3000/api/post?slug=querobolin
