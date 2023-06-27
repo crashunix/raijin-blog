@@ -21,9 +21,9 @@ const fetchFromNotion = async (slug: string) => {
     return data;
 }
 const PostPage = async ({ params }: { params: { slug: string } }) => {
-    const data: { post: Post, blocks: any[] } = await fetchFromNotion(params.slug);
+    // const data: { post: Post, blocks: any[] } = await fetchFromNotion(params.slug);
 
-    console.log(data);
+    // console.log(data);
 
     const Heading1 = ({ plainText }: { plainText: string }) => {
         return <h1 className="text-2xl my-3 font-medium">{plainText}</h1>
@@ -41,7 +41,7 @@ const PostPage = async ({ params }: { params: { slug: string } }) => {
 
     return (
         <>
-            <div className="container mx-auto px-4">
+            {/* <div className="container mx-auto px-4">
                 <div className="aspect-video w-full relative mt-24">
                     <Image priority alt={data.post.coverImage.alt} fill src={data.post.coverImage.url}></Image>
                 </div>
@@ -55,7 +55,7 @@ const PostPage = async ({ params }: { params: { slug: string } }) => {
                         paragraph: withContentValidation(Paragraph)
                     }}></Render>
                 </div>
-            </div>
+            </div> */}
         </>
     );
 }

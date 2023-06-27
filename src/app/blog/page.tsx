@@ -14,7 +14,7 @@ const fetchFromNotion = async () => {
 }
 
 const Blog = async () => {
-    const posts: Post[] = await fetchFromNotion();
+    // const posts: Post[] = await fetchFromNotion();
 
     return (
         <>
@@ -27,25 +27,18 @@ const Blog = async () => {
                 </div>
                 {/* Blog Content */}
                 {/* Featured Post */}
-                <Link href={`/blog/${posts[0].slug}`}>
+                {/* <Link href={`/blog/${posts[0].slug}`}>
                     <div className="aspect-video w-full relative">
                         <Image priority alt={posts[0].coverImage.alt} fill src={posts[0].coverImage.url}></Image>
                         <div className="flex flex-col space-y-4 justify-end absolute inset-0 p-6 text-white bg-gradient-to-t from-black to-transparent">
                             <span className="text-sm text-light">{posts[0].author} | {posts[0].publishedAt}</span>
                             <h4 className="font-medium text-4xl">{posts[0].title}</h4>
                             <p className="text-md font-light">{posts[0].description}</p>
-                            {/* <div className="flex space-x-2 items-center">
-                            {
-                                featured.categories.map((category: string, index: number) => (
-                                    <Link href={'/'} key={index}><span className=" px-2 py-1 border border-white rounded-lg text-xs">{category}</span></Link>
-                                    ))
-                                }
-                            </div> */}
                         </div>
                     </div>
-                </Link>
+                </Link> */}
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-20 text-gray-800">
+                {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-20 text-gray-800">
                     {
                         posts.slice(1).map((post: Post, index: number) => (
                             <Link href={`/blog/${post.slug}`}>
@@ -57,19 +50,12 @@ const Blog = async () => {
                                         <span className="text-xs text-light">{post.author} | {post.publishedAt}</span>
                                         <h4 className="font-semibold text-2xl">{post.title}</h4>
                                         <p className="text-sm font-light">{post.description}</p>
-                                        {/* <div className="flex space-x-2 items-center">
-                                            {
-                                                post.categories.map((category: string, index: number) => (
-                                                    <span className="text-gray-600 rounded-lg text-xs">{category}</span>
-                                                ))
-                                            }
-                                        </div> */}
                                     </div>
                                 </div>
                             </Link>
                         ))
                     }
-                </div>
+                </div> */}
             </div>
         </>
     );
