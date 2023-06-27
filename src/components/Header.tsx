@@ -7,7 +7,7 @@ const fetchFromNotion = async () => {
     return data;
 }
 const Header = async () => {
-    // const config = await fetchFromNotion();
+    const config = await fetchFromNotion();
     
     return <>
         <header className="text-gray-800 py-4">
@@ -16,7 +16,7 @@ const Header = async () => {
                     {/* Left Side */}
                     <div className="flex items-center space-x-12">
                         <Link href="/">
-                            {/* <span className="text-2xl">{config.find((x: any) => x.name == 'app-name').text}</span> */}
+                            <span className="text-2xl">{config.find((x: any) => x.name == 'app-name').text}</span>
                         </Link>
                         <nav className="flex items-center space-x-12 font-semibold text-lg">
                             <Link href="/">Home</Link>
