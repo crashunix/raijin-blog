@@ -2,6 +2,7 @@ import { getBaseUrl } from "@/lib/getBaseUrl";
 import Link from "next/link";
 import next from "next/types";
 import { Bars2Icon } from '@heroicons/react/24/outline'
+import Navbar from "./ui/Navbar";
 
 const fetchFromNotion = async () => {
     const res = await fetch(`${getBaseUrl()}/api/config`);
@@ -11,11 +12,23 @@ const fetchFromNotion = async () => {
 const Header = async () => {
     const config = await fetchFromNotion();
 
+    const appName = config.find((x: any) => x.name == 'app-name').text;
+    const menuItems = [
+        {
+            name: "Home",
+            url: '/'
+        },
+        {
+            name: "Blog",
+            url: '/blog'
+        },
+    ]
+
     return <>
-        <header className="text-gray-800 py-4">
+        <Navbar hasLogo title={appName} menuItems={menuItems}></Navbar>
+        {/* <header className="text-gray-800 py-4">
             <div className="container px-4 mx-auto">
                 <div className="flex justify-between items-center">
-                    {/* Left Side */}
                     <div className="flex items-center space-x-12">
                         <Link href="/">
                             <span className="text-2xl">{config.find((x: any) => x.name == 'app-name').text}</span>
@@ -26,7 +39,6 @@ const Header = async () => {
                             <Link href="/">Projects</Link>
                         </nav>
                     </div>
-                    {/* Right Side */}
                     <div className="flex items-center space-x-4">
                         <Link href={'/'} className="hidden md:block">
                             <span className="py-2 px-3 rounded-md font-semibold">Log in</span>
@@ -40,7 +52,7 @@ const Header = async () => {
                     </div>
                 </div>
             </div>
-        </header>
+        </header> */}
     </>
 }
 

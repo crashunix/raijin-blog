@@ -43,12 +43,12 @@ const PostPage = async ({ params }: { params: { slug: string } }) => {
     return (
         <>
             <div className="container mx-auto px-4">
-                <div className="aspect-video w-full relative mt-24">
+                <h2 className="text-3xl mt-24 font-semibold">{data.post.title}</h2>
+                <p className="text-zinc-200">{data.post.description}</p>
+                <div className="aspect-video w-full relative mt-4">
                     <Image priority alt={data.post.coverImage.alt} fill src={data.post.coverImage.url}></Image>
                 </div>
-                <h2 className="text-3xl mt-4 font-semibold text-gray-800">{data.post.title}</h2>
-                <p className="text-gray-800">{data.post.description}</p>
-                <div className="mt-12">
+                <div className="mt-24">
                     <Render blocks={data.blocks} blockComponentsMapper={{
                         heading_1: withContentValidation(Heading1),
                         heading_2: withContentValidation(Heading2),

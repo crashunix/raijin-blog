@@ -14,6 +14,13 @@ const fetchFromNotion = async () => {
     return data;
 }
 
+const ColorText = ({ children, color }: any) => {
+    const gradient = color == 'pink' ? 'from-pink-500 to-pink-700' : 'from-blue-500 to-blue-700';	
+    return (
+        <span className={`text-transparent bg-clip-text bg-gradient-to-t ${gradient} font-bold`}>{children}</span>
+    )
+}
+
 const Blog = async () => {
     const posts: Post[] = await fetchFromNotion();
 
@@ -21,43 +28,36 @@ const Blog = async () => {
         <>
             <div className="container mx-auto px-4">
                 {/* Blog Header */}
-                <div className="text-center mt-24 mb-12">
-                    <h2 className="font-semibold">Blog</h2>
-                    <h3 className="font-medium text-6xl mt-2">Notion blog</h3>
-                    <p className="text-gray-600 mt-6">Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
+                <div className="mt-24 mb-12">
+                    <h2 className="font-semibold text-xl">Blog</h2>
+                    <h3 className="font-medium text-6xl mt-2">Explore nosso <ColorText color={'pink'}>Blog</ColorText>.<br/>Descubra!</h3>
+                    <p className="mt-6 max-w-md">Descubra artigos envolventes, dicas úteis e histórias cativantes que vão <ColorText>inspirar</ColorText> você a <ColorText>explorar</ColorText> e <ColorText>aprender</ColorText>.</p>
                 </div>
                 {/* Blog Content */}
                 {/* Featured Post */}
-                <Link href={`/blog/${posts[0].slug}`}>
+                {/* <Link href={`/blog/${posts[0].slug}`}>
                     <div className="aspect-video w-full relative">
                         <Image priority alt={posts[0].coverImage.alt} fill src={posts[0].coverImage.url}></Image>
                         <div className="flex flex-col space-y-4 justify-end absolute inset-0 p-6 text-white bg-gradient-to-t from-black to-transparent">
-                            <span className="text-sm text-light">{posts[0].author} | {posts[0].publishedAt}</span>
+                            <span className="text-sm text-light text-zinc-400">{posts[0].author} | {posts[0].publishedAt}</span>
                             <h4 className="font-medium text-4xl">{posts[0].title}</h4>
-                            <p className="text-md font-light">{posts[0].description}</p>
-                            {/* <div className="flex space-x-2 items-center">
-                            {
-                                featured.categories.map((category: string, index: number) => (
-                                    <Link href={'/'} key={index}><span className=" px-2 py-1 border border-white rounded-lg text-xs">{category}</span></Link>
-                                    ))
-                                }
-                            </div> */}
+                            <p className="text-md font-light text-zinc-200">{posts[0].description}</p>
                         </div>
                     </div>
-                </Link>
+                </Link> */}
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-20 text-gray-800">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:gap-4 mt-24 md:mt-20">
                     {
-                        posts.slice(1).map((post: Post, index: number) => (
-                            <Link href={`/blog/${post.slug}`}>
+                        posts.map((post: Post, index: number) => (
+                            <Link href={`/blog/${post.slug}`} className={`${index == 0 ? 'md:col-span-2 lg:col-span-3' : ''}`}>
                                 <div className="flex flex-col">
                                     <div className="aspect-video relative">
                                         <Image alt={post.coverImage.alt} fill src={post.coverImage.url}></Image>
                                     </div>
                                     <div className="flex flex-col space-y-2 py-5">
-                                        <span className="text-xs text-light">{post.author} | {post.publishedAt}</span>
+                                        <span className="text-xs text-light text-zinc-400">{post.author} | {post.publishedAt}</span>
                                         <h4 className="font-semibold text-2xl">{post.title}</h4>
-                                        <p className="text-sm font-light">{post.description}</p>
+                                        <p className="text-sm font-light text-zinc-200">{post.description}</p>
                                         {/* <div className="flex space-x-2 items-center">
                                             {
                                                 post.categories.map((category: string, index: number) => (
