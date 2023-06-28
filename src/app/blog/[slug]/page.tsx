@@ -46,7 +46,7 @@ const PostPage = async ({ params }: { params: { slug: string } }) => {
                 <h2 className="text-3xl mt-24 font-semibold">{data.post.title}</h2>
                 <p className="text-zinc-200">{data.post.description}</p>
                 <div className="aspect-video w-full relative mt-4">
-                    <Image priority alt={data.post.coverImage.alt} fill src={data.post.coverImage.url}></Image>
+                    <Image priority alt={data.post.coverImage.alt} fill src={data.post.coverImage.url} className="rounded-3xl"></Image>
                 </div>
                 <div className="mt-24">
                     <Render blocks={data.blocks} blockComponentsMapper={{

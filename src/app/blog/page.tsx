@@ -29,7 +29,7 @@ const Blog = async () => {
             <div className="container mx-auto px-4">
                 {/* Blog Header */}
                 <div className="mt-24 mb-12">
-                    <h2 className="font-semibold text-xl">Blog</h2>
+                    <h2 className="font-semibold text-xl">/blog</h2>
                     <h3 className="font-medium text-6xl mt-2">Explore nosso <ColorText color={'pink'}>Blog</ColorText>.<br/>Descubra!</h3>
                     <p className="mt-6 max-w-md">Descubra artigos envolventes, dicas úteis e histórias cativantes que vão <ColorText>inspirar</ColorText> você a <ColorText>explorar</ColorText> e <ColorText>aprender</ColorText>.</p>
                 </div>
@@ -52,7 +52,7 @@ const Blog = async () => {
                             <Link href={`/blog/${post.slug}`} className={`${index == 0 ? 'md:col-span-2 lg:col-span-3' : ''}`}>
                                 <div className="flex flex-col">
                                     <div className="aspect-video relative">
-                                        <Image alt={post.coverImage.alt} fill src={post.coverImage.url}></Image>
+                                        <Image alt={post.coverImage.alt} fill src={post.coverImage.url} className="rounded-3xl"></Image>
                                     </div>
                                     <div className="flex flex-col space-y-2 py-5">
                                         <span className="text-xs text-light text-zinc-400">{post.author} | {post.publishedAt}</span>

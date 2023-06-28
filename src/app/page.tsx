@@ -1,9 +1,12 @@
+import CustomersCarousel from '@/components/CustomersCarousel'
 import Image from 'next/image'
 
 export default function Home() {
   return (
     <>
-    家
+    <div className="container mx-auto px-4">
+      <CustomersCarousel></CustomersCarousel>
+    </div>
     </>
   )
 }
