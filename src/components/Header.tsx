@@ -18,10 +18,10 @@ const Header = async () => {
             name: "Home",
             url: '/'
         },
-        {
-            name: "Blog",
-            url: '/blog'
-        },
+        // {
+        //     name: "Blog",
+        //     url: '/blog'
+        // },
     ]
 
     return <>
