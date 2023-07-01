@@ -1,19 +1,16 @@
+import { StrapiMenuItem } from "@/types/StrapiMenuItem";
 import { Bars2Icon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
 
-type MenuItem = {
-    name: string,
-    url: string
-}
-
 type NavbarProps = {
     hasLogo: boolean,
+    logo: string,
     title: string,
-    menuItems: MenuItem[],
+    menuItems: StrapiMenuItem[],
 }
 
-const Navbar: React.FC<NavbarProps> = ({ hasLogo, title, menuItems }) => {
+const Navbar: React.FC<NavbarProps> = ({ hasLogo, title, menuItems, logo }) => {
 
     return (
         <div className="container mx-auto px-4 py-4 sticky top-0 z-30">
@@ -21,7 +18,7 @@ const Navbar: React.FC<NavbarProps> = ({ hasLogo, title, menuItems }) => {
                 <div className="flex justify-between items-center p-6">
                     <div className="flex items-center space-x-2">
                         { hasLogo &&
-                            <Image src={"/img/abstergo.webp"} width={26} height={26} alt="Abstergo" />
+                            <Image src={logo || "/img/abstergo.webp"} width={26} height={26} alt="Abstergo" />
                         }
                         <Link href="/">
                             <span className="text-xl uppercase font-bold">{title}</span>
@@ -29,8 +26,8 @@ const Navbar: React.FC<NavbarProps> = ({ hasLogo, title, menuItems }) => {
                     </div>
                     <nav className="hidden md:flex items-center space-x-6 font-medium">
                         {
-                            menuItems.map((item: MenuItem, index: number) => (
-                                <Link href={item.url} key={index}>{item.name}</Link>
+                            menuItems.map((item: StrapiMenuItem, index: number) => (
+                                <Link href={item.path} key={index}>{item.name}</Link>
                             ))
                         }
                     </nav>

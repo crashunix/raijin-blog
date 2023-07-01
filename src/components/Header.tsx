@@ -3,16 +3,15 @@ import Link from "next/link";
 import next from "next/types";
 import { Bars2Icon } from '@heroicons/react/24/outline'
 import Navbar from "./ui/Navbar";
+import { SiteConfig } from "@/types/SiteConfig";
 
-const fetchFromNotion = async () => {
-    const res = await fetch(`${getBaseUrl()}/api/config`);
-    const data = await res.json();
-    return data;
+const fetchData = async (): Promise<SiteConfig> => {
+    const res = await fetch(`${process.env.API_URL}/site-config?populate=*`, { next: { revalidate: 86400 } });
+    return res.json();
 }
 const Header = async () => {
-    const config = await fetchFromNotion();
+    const config = await fetchData();
 
-    const appName = config.find((x: any) => x.name == 'app-name').text;
     const menuItems = [
         {
             name: "Home",
@@ -25,34 +24,7 @@ const Header = async () => {
     ]
 
     return <>
-        <Navbar hasLogo title={appName} menuItems={menuItems}></Navbar>
-        {/* <header className="text-gray-800 py-4">
-            <div className="container px-4 mx-auto">
-                <div className="flex justify-between items-center">
-                    <div className="flex items-center space-x-12">
-                        <Link href="/">
-                            <span className="text-2xl">{config.find((x: any) => x.name == 'app-name').text}</span>
-                        </Link>
-                        <nav className="hidden md:flex items-center space-x-12 font-semibold text-lg">
-                            <Link href="/">Home</Link>
-                            <Link href="/blog">Blog</Link>
-                            <Link href="/">Projects</Link>
-                        </nav>
-                    </div>
-                    <div className="flex items-center space-x-4">
-                        <Link href={'/'} className="hidden md:block">
-                            <span className="py-2 px-3 rounded-md font-semibold">Log in</span>
-                        </Link>
-                        <Link href={'/'} className="hidden md:block">
-                            <span className="py-2 px-3 rounded-md font-semibold bg-gray-800 text-white">Sign up</span>
-                        </Link>
-                        <button className="md:hidden">
-                            <Bars2Icon className="w-8"></Bars2Icon>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </header> */}
+        <Navbar hasLogo logo={`${process.env.MEDIA_URL}${config.data.attributes.logo.data[0].attributes.url}`} title={config.data.attributes.title} menuItems={config.data.attributes.mainMenu}></Navbar>
     </>
 }
 

@@ -1,64 +1,42 @@
-import { getBaseUrl } from "@/lib/getBaseUrl";
-import { Post } from "@/types/Post";
-import { Render, withContentValidation } from "@9gustin/react-notion-render";
-import Image from "next/image";
-import Link from "next/link";
+import RenderBlock from "@/components/RenderBlock";
+import ColorText from "@/components/ui/ColorText";
+import { StrapiPage } from "@/types/StrapiPage";
+import { fetchStrapi } from "@/utils/fetchStrapi";
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
-    const data: { post: Post, blocks: any[] } = await fetchFromNotion(params.slug);
-    return { 
-        title: data.post.title,
-        description: data.post.description,
-        authors: {
-            name: 'Juan Macário',
-            url: 'https://juanmacario.dev',
-        }
-    };
-  }
-
-const fetchFromNotion = async (slug: string) => {
-    const res = await fetch(`${getBaseUrl()}/api/post?slug=${slug}`);
-    const data = await res.json();
-    return data;
+const fetchData = async (): Promise<StrapiPage> => {
+    const res = await fetchStrapi(`/pages`, {
+        filters: {
+            slug: {
+                $eq: "about"
+            }
+        },
+        populate: {
+            blocks: {
+                populate: "*"
+            }
+        },
+    }, { next: { revalidate: 86400 } });
+    console.log("RESPOSTA", res.data[0].attributes);
+    return res.data[0];
 }
-const PostPage = async ({ params }: { params: { slug: string } }) => {
-    const data: { post: Post, blocks: any[] } = await fetchFromNotion(params.slug);
 
-    console.log(data);
-
-    const Heading1 = ({ plainText }: { plainText: string }) => {
-        return <h1 className="text-2xl my-3 font-medium">{plainText}</h1>
-    }
-    const Heading2 = ({ plainText }: { plainText: string }) => {
-        return <h2 className="text-xl my-3 font-medium">{plainText}</h2>
-    }
-    const Heading3 = ({ plainText }: { plainText: string }) => {
-        return <h3 className="text-lg my-3 font-medium">{plainText}</h3>
-    }
-
-    const Paragraph = ({ plainText }: { plainText: string }) => {
-        return <p className="my-2">{plainText}</p>
-    }
-
+const Page = async () => {
+    const pageData = await fetchData();
     return (
-        <>
-            <div className="container mx-auto px-4">
-                <h2 className="text-3xl mt-24 font-semibold">{data.post.title}</h2>
-                <p className="text-zinc-200">{data.post.description}</p>
-                <div className="aspect-video w-full relative mt-4">
-                    <Image priority alt={data.post.coverImage.alt} fill src={data.post.coverImage.url} className="rounded-3xl"></Image>
+        <div>
+             <div className="container mx-auto px-4">
+                {/* Blog Header */}
+                <div className="mt-24 mb-12">
+                    <h2 className="font-semibold text-xl">/{pageData.attributes.slug}</h2>
+                    <h3 className="font-medium text-6xl mt-2">{pageData.attributes.subtitle}</h3>
+                    <p className="mt-6 max-w-md">{pageData.attributes.description}</p>
                 </div>
-                <div className="mt-24">
-                    <Render blocks={data.blocks} blockComponentsMapper={{
-                        heading_1: withContentValidation(Heading1),
-                        heading_2: withContentValidation(Heading2),
-                        heading_3: withContentValidation(Heading3),
-                        paragraph: withContentValidation(Paragraph)
-                    }}></Render>
-                </div>
+                {pageData.attributes.blocks.map(x => (
+                    <RenderBlock block={x}></RenderBlock>
+                ))}
             </div>
-        </>
+        </div>
     );
-}
+};
 
-export default PostPage;
+export default Page;
